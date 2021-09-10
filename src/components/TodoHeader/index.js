@@ -1,29 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const TodoHeader = ({value, addTodo, handleKeyPress, handleInput, lenght, todos}) => {
+const TodoHeader = ({value, addTodo, handleKeyPress, handleInput, length, todos, filteredDate}) => {
 
+    console.log(todos)
 
-    const filterDate =(type) => {
-        console.log(type)
-        const time ={
-            Day: 24* 60* 60* 1000,
-            Week: 24* 60 * 60* 1000* 7,
-            Month: 24*60*60* 1000 * 30
-        }
-
-    }
     return (
        <div >
          <div className="d-flex align-items-center justify-content-between"  >
              <h1>TodoList</h1>
-             <span>Items:{lenght} </span>
+             <span>Items:{length} </span>
          </div>
            <div className="d-flex align-items-center justify-content-between mb-4" >
                <h6>View for:</h6>
                <div  >
-                   <button  className="btn btn-secondary me-2 btn-sm"  onClick={()=>filterDate("Day")}>Day</button>
-                   <button className="btn btn-secondary me-2 btn-sm" onClick={()=>filterDate("Week")} >Week</button>
-                   <button className="btn btn-secondary btn-sm" onClick={()=>filterDate("Month")} >Month</button>
+                   <button  className="btn btn-secondary me-2 btn-sm"  onClick={()=>filteredDate("Day")}>Day</button>
+                   <button className="btn btn-secondary me-2 btn-sm" onClick={()=>filteredDate("Week")} >Week</button>
+                   <button className="btn btn-secondary me-2 btn-sm" onClick={()=>filteredDate("Month")} >Month</button>
+                   <button className="btn btn-secondary btn-sm" onClick={()=>filteredDate("All")} >All</button>
                </div>
            </div>
            <div className="d-flex mb-4">
