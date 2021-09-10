@@ -1,39 +1,52 @@
 import React, {useState} from 'react';
+import {nanoid} from "nanoid";
+import TodoItem from "../TodoItem";
+import TodoHeader from "../TodoHeader";
 
 const Todo = () => {
     const [todos, setTodos] = useState([
-        {id:1, title: "Drink tea"},
-        { id:2, title: "Go to work"}])
+        {id: nanoid(), title: "Drink tea",  createdAt: +new Date()},
+        {id: nanoid(), title: "Go to work",  createdAt: +new Date()}])
     const [value, setValue] = useState("")
-const handleInput =(e) => {
+
+    const handleInput = (e) => {
         setValue(e.target.value)
-}
-const addTodo=() => {
-        setTodos([...todos, {title: value}])
-}
+    }
+    const handleKeyPress =(e) => {
+        if (e.key === "Enter" && value.trim()) {
+            addTodo()
+        }}
+    const addTodo = () => {
+    const newTodo = {
+        id: nanoid(),
+        title: value,
+        createdAt: +new Date()
+    }
+        setTodos([...todos, newTodo])
+        setValue("")
+    }
+    const deleteTodo = (id) => {
+        setTodos(todos.filter(item=> item.id !== id))
+    }
+    const saveTodo =(id, title) => {
+        setTodos(todos.map(item=>item.id=== id? {...item, title}: item))
+    }
 
     return (
         <div className="row my-5">
-         <div className="col-4 offset-md-4">
-           <div className="d-flex mb-4">
-               <input type="text" className="form-control me-2" onChange={handleInput}/>
-               <button type="button" className="btn btn-primary"  disabled={!value.trim()} onClick={addTodo}>Add</button>
-           </div>
-             <ul className="list-group">
-                 {
-                     todos.map(item=>
-                         <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
-                             <span>{item.title}</span>
-                             <div>
-                                <button type="button" className="btn btn-warning me-2"> Edit</button>
-                                 <button type="button"  className="btn btn-danger">Delete</button>
-                             </div>
-                         </li>)
-                 }
-             </ul>
-         </div>
+            <div className="col-4 offset-4">
+               <TodoHeader value={value} handleInput={handleInput} addTodo={addTodo} handleKeyPress={handleKeyPress} lenght={todos.length} todos={todos}/>
+                <ul className="list-group">
+                    {
+                        todos.map(item =>
+                            <TodoItem item={item} saveTodo={saveTodo} deleteTodo={deleteTodo} handleInput={handleInput}/>
+                            )}
+                </ul>
+                <button type="button" className="btn btn-danger mt-3 w-100"  onClick={()=>setTodos([])}>Clear all</button>
+            </div>
         </div>
 
-    )};
+    )
+};
 
 export default Todo;
