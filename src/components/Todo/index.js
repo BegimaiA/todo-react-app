@@ -19,8 +19,7 @@ const Todo = () => {
     const handleKeyPress = (e) => {
         if (e.key === "Enter" && value.trim()) {
             addTodo()
-        }
-    }
+        }}
     const addTodo = () => {
         const newTodo = {
             id: nanoid(),
@@ -57,6 +56,12 @@ const Todo = () => {
         axios.delete(`https://6115f1038f38520017a3863c.mockapi.io/todos/${id}`))
            setTodos([])
     }
+
+    const doneTodo= (id, status) => {
+        axios.put(`https://6115f1038f38520017a3863c.mockapi.io/todos/${id}`, {isDone:!status})
+            .then(({data})=>setTodos(todos.map(item => item.id === id ? data : item)))
+
+    }
     return (
         <div className="row my-5">
             <div className="col-4 offset-4">
@@ -66,7 +71,7 @@ const Todo = () => {
                 <ul className="list-group">
                     {
                         todos.map(item =>
-                            <TodoItem item={item} saveTodo={saveTodo} deleteTodo={deleteTodo}
+                            <TodoItem  key={item.id} item={item} saveTodo={saveTodo} deleteTodo={deleteTodo} doneTodo={doneTodo}
                                       handleInput={handleInput}/>
                         )}
                 </ul>

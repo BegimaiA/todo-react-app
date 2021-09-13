@@ -1,9 +1,6 @@
 import React, {useState} from 'react';
 
 const TodoHeader = ({value, addTodo, handleKeyPress, handleInput, length, todos, filteredDate}) => {
-
-    console.log(todos)
-
     return (
        <div >
          <div className="d-flex align-items-center justify-content-between"  >
@@ -12,7 +9,7 @@ const TodoHeader = ({value, addTodo, handleKeyPress, handleInput, length, todos,
          </div>
            <div className="d-flex align-items-center justify-content-between mb-4" >
                <h6>View for:</h6>
-               <div  >
+               <div>
                    <button  className="btn btn-secondary me-2 btn-sm"  onClick={()=>filteredDate("Day")}>Day</button>
                    <button className="btn btn-secondary me-2 btn-sm" onClick={()=>filteredDate("Week")} >Week</button>
                    <button className="btn btn-secondary me-2 btn-sm" onClick={()=>filteredDate("Month")} >Month</button>

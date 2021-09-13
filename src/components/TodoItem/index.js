@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faTrash, faSave} from "@fortawesome/free-solid-svg-icons";
+import {faEdit, faTrash, faSave, faCheck} from "@fortawesome/free-solid-svg-icons";
 
-const TodoItem = ({item, saveTodo, deleteTodo}) => {
+const TodoItem = ({item, saveTodo, deleteTodo, doneTodo}) => {
     const [isEdit, setIsEdit] = useState(false)
     const [newTitle, setNewTitle] = useState(item.title)
     const handleEdit = () => {
@@ -17,11 +17,16 @@ const TodoItem = ({item, saveTodo, deleteTodo}) => {
     }
 
     return (
-        <li key={item.id}  className="list-group-item d-flex justify-content-between align-items-center" >
+        <li   className="list-group-item d-flex justify-content-between align-items-center" >
             {
-                isEdit? <input type="text" className="form-control me-3" defaultValue={item.title} onChange={handleNewValue}/> : <span>{item.title}</span>
+                isEdit? <input type="text" className="form-control me-3" defaultValue={item.title} onChange={handleNewValue}/> : <span className={item.isDone && "text-decoration-line-through"}>{item.title}</span>
             }
             <div className="d-flex">
+                {
+                    ! isEdit && <button type="button" className="btn btn-outline-success me-2"
+                                      onClick={() => doneTodo(item.id, item.isDone)}><FontAwesomeIcon icon={faCheck}/>
+                    </button>
+                }
                 <button type="button" className="btn btn-outline-warning me-2" onClick={isEdit? handleSave : handleEdit}>
                     {
                         isEdit? <FontAwesomeIcon icon={faSave}/> : <FontAwesomeIcon icon={faEdit}/>
